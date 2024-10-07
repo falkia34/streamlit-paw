@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "streamlit-paw"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+streamlit = "^1.37.1"
+numpy = "1.26.4"
+pandas = "^2.2.2"
+textblob = "^0.18.0.post0"
+vadersentiment = "^3.3.2"
+transformers = "^4.14.1"
+torch = {version = "^2.4.1+cpu", source = "pytorch_cpu"}
+scikit-learn = "^1.5.2"
+
+
+[[tool.poetry.source]]
+name = "pytorch_cpu"
+url = "https://download.pytorch.org/whl/cpu"
+priority = "explicit"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
