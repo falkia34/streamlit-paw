@@ -185,7 +185,7 @@ def wpdrama_analysis():
                       height=400, color_discrete_map=color_mapping).update_layout(title_text='Sentiment Distribution')
         st.plotly_chart(fig2, use_container_width=True)
 
-    st.markdown("### Positif Sentiment")
+    st.markdown("### Positive Sentiment")
     st.write(df[df['label'] == 'positive'][['full_text', 'score']
                                            ].sort_values(['score'], ascending=False))
 
