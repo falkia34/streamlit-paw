@@ -4,6 +4,9 @@ import pandas as pd
 import altair as alt
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import requests
+import plotly.express as px
+from PIL import Image
+
 
 API_URL = "https://api-inference.huggingface.co/models/ayameRushia/bert-base-indonesian-1.5G-sentiment-analysis-smsa"
 headers = {"Authorization": "Bearer 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"}
@@ -13,10 +16,10 @@ st.set_page_config(
     page_icon="🔥",
 )
 
+st.title(":no_mouth: Sentiment Analysis")
+
 
 def main():
-    st.title(":no_mouth: Sentiment Analysis")
-
     menu = ["English", "Indonesia"]
     choice = st.sidebar.selectbox("Language", menu)
 
@@ -143,5 +146,62 @@ def id_analyze_token_sentiment(docx):
     return result
 
 
+def wpdrama_analysis():
+    df = pd.read_csv("data/wpdrama_result.csv")
+    img = Image.open('data/wpdrama_wordcloud.png')
+
+    color_mapping = {
+        'positive': 'blue',
+        'neutral': 'lightblue',
+        'negative': 'red'
+    }
+
+    st.subheader("WordPress vs WP Engine Drama")
+    st.image(img)
+
+    st.markdown("### The Story")
+    st.video('https://www.youtube.com/watch?v=mc5P_082bvY')
+
+    st.markdown("### The Stats")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        df['date'] = pd.to_datetime(
+            df['created_at'], format="%a %b %d %H:%M:%S %z %Y").dt.strftime('%Y-%m-%d')
+        df1 = df.groupby(['date', 'label']).size().reset_index()
+        df1 = df1.sort_values(['date'], ascending=True)
+        df1.rename(columns={0: 'count'}, inplace=True)
+
+        fig1 = px.line(df1, x="date", y="count", color='label', width=600,
+                       height=400, color_discrete_map=color_mapping).update_layout(title_text='Sentiment Trend')
+        st.plotly_chart(fig1, use_container_width=True)
+
+    with col2:
+        sentiment_count = df.groupby(['label'])['label'].count()
+        sentiment_count = pd.DataFrame(
+            {'Sentiments': sentiment_count.index, 'sentiment': sentiment_count.values})
+        fig2 = px.pie(sentiment_count, values='sentiment', names='Sentiments', width=550,
+                      height=400, color_discrete_map=color_mapping).update_layout(title_text='Sentiment Distribution')
+        st.plotly_chart(fig2, use_container_width=True)
+
+    st.markdown("### Positif Sentiment")
+    st.write(df[df['label'] == 'positive'][['full_text', 'score']
+                                           ].sort_values(['score'], ascending=False))
+
+    st.markdown("### Negative Sentiment")
+    st.write(df[df['label'] == 'negative'][['full_text', 'score']
+                                           ].sort_values(['score'], ascending=True))
+
+    st.markdown("### Netral Sentiment")
+    st.write(df[df['label'] == 'neutral'][['full_text', 'score']])
+
+
 if __name__ == '__main__':
-    main()
+    menu = ["Analyze", "WordPress Drama Analysis"]
+    choice = st.sidebar.selectbox("Menu", menu)
+
+    if choice == "Analyze":
+        main()
+    elif choice == "WordPress Drama Analysis":
+        wpdrama_analysis()
