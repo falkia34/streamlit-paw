@@ -149,8 +149,8 @@ def id_analyze_token_sentiment(docx):
 
 
 def wpdrama_analysis():
-    df = pd.read_csv("data/wpdrama_result.csv")
-    img = Image.open('data/wpdrama_wordcloud.png')
+    df = pd.read_csv("streamlit_paw/data/wpdrama_result.csv")
+    img = Image.open('streamlit_paw/data/wpdrama_wordcloud.png')
 
     color_mapping = {
         'positive': 'blue',

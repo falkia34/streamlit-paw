@@ -4,8 +4,9 @@ import os
 import numpy as np
 
 
-def load_prediction_model(model_file):
-    loaded_model = joblib.load(open(os.path.join(model_file), "rb"))
+def load_model(model_file):
+    loaded_model = joblib.load(
+        open(os.path.join('streamlit_paw/models', model_file), "rb"))
     return loaded_model
 
 
@@ -23,7 +24,7 @@ with st.form("my_form"):
     submitted = st.form_submit_button("Proses")
 
 if submitted:
-    regressor = load_prediction_model("models/linear_regression_salary.pkl")
+    regressor = load_model("linear_regression_salary.pkl")
     experience_reshaped = np.array(experience).reshape(-1, 1)
 
     predicted_salary = regressor.predict(experience_reshaped)

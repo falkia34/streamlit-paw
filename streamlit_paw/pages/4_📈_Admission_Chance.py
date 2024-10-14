@@ -3,8 +3,9 @@ import joblib
 import os
 
 
-def load_prediction_model(model_file):
-    loaded_model = joblib.load(open(os.path.join(model_file), "rb"))
+def load_model(model_file):
+    loaded_model = joblib.load(
+        open(os.path.join('streamlit_paw/models', model_file), "rb"))
     return loaded_model
 
 
@@ -28,9 +29,7 @@ with st.form("my_form"):
     submitted = st.form_submit_button("Process")
 
 if submitted:
-    regressor = load_prediction_model(
-        "models/linear_regression_grad_admission.pkl"
-    )
+    regressor = load_model("linear_regression_grad_admission.pkl")
 
     predicted_result = regressor.predict(
         [[gre, toefl, univ_rating, sop, lor, cgpa, research_exp]])
