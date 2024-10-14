@@ -9,7 +9,7 @@ from PIL import Image
 
 
 API_URL = "https://api-inference.huggingface.co/models/ayameRushia/bert-base-indonesian-1.5G-sentiment-analysis-smsa"
-headers = {"Authorization": "Bearer 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"}
+API_TOKEN = st.secrets["HF_TOKEN"]
 
 st.set_page_config(
     page_title="Sentiment Analysis - Streamlit App",
@@ -88,6 +88,8 @@ def main():
 
 
 def id_query(payload):
+    headers = {"Authorization": "Bearer " + API_TOKEN}
+
     response = requests.post(API_URL, headers=headers,
                              json={"inputs": payload})
     return response.json()
