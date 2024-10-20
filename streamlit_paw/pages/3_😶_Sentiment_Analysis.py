@@ -49,7 +49,7 @@ if page == "Statistics":
 if page == "Calculation":
     st.switch_page("pages/2_🔢_Calculation.py")
 if page == "Regression":
-    st.switch_page("pages/4_📈_Regression.py")
+    st.switch_page("pages/4_📈_Linear_Regression.py")
 if page == "About":
     st.switch_page("pages/5_🔣_About.py")
 
