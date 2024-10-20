@@ -1,9 +1,49 @@
 import streamlit as st
+from streamlit_navigation_bar import st_navbar
 
 st.set_page_config(
     page_title="About - Streamlit App",
     page_icon="🔥",
+    initial_sidebar_state="collapsed",
 )
+
+styles = {
+    "nav": {
+        "background-color": "royalblue",
+    },
+    "img": {
+        "padding-right": "14px",
+    },
+    "span": {
+        "color": "white",
+        "border-radius": "0.5rem",
+        "margin": "0 0.125rem",
+        "padding": "0.4375rem 0.625rem",
+    },
+    "active": {
+        "background-color": "rgba(255, 255, 255, 0.25)",
+    },
+    "hover": {
+        "background-color": "rgba(255, 255, 255, 0.35)",
+    },
+}
+options = {
+    "show_sidebar": False,
+}
+
+page = st_navbar(["Home", "Statistics", "Calculation", "Sentiment Analysis",
+                 "Regression", "About"], selected="About", styles=styles, options=options)
+
+if page == "Home":
+    st.switch_page("0_🏠_Home.py")
+if page == "Statistics":
+    st.switch_page("pages/1_📊_Statistics.py")
+if page == "Calculation":
+    st.switch_page("pages/2_🔢_Calculation.py")
+if page == "Sentiment Analysis":
+    st.switch_page("pages/3_😶_Sentiment_Analysis.py")
+if page == "Regression":
+    st.switch_page("pages/4_📈_Linear_Regression.py")
 
 st.title(":symbols: About")
 

@@ -6,6 +6,7 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import requests
 import plotly.express as px
 from PIL import Image
+from streamlit_navigation_bar import st_navbar
 
 
 API_URL = "https://api-inference.huggingface.co/models/ayameRushia/bert-base-indonesian-1.5G-sentiment-analysis-smsa"
@@ -14,7 +15,43 @@ API_TOKEN = st.secrets["HF_TOKEN"]
 st.set_page_config(
     page_title="Sentiment Analysis - Streamlit App",
     page_icon="🔥",
+    initial_sidebar_state="collapsed",
 )
+
+styles = {
+    "nav": {
+        "background-color": "royalblue",
+    },
+    "img": {
+        "padding-right": "14px",
+    },
+    "span": {
+        "color": "white",
+        "border-radius": "0.5rem",
+        "margin": "0 0.125rem",
+        "padding": "0.4375rem 0.625rem",
+    },
+    "active": {
+        "background-color": "rgba(255, 255, 255, 0.25)",
+    },
+    "hover": {
+        "background-color": "rgba(255, 255, 255, 0.35)",
+    },
+}
+
+page = st_navbar(["Home", "Statistics", "Calculation", "Sentiment Analysis",
+                 "Regression", "About"], selected="Sentiment Analysis", styles=styles)
+
+if page == "Home":
+    st.switch_page("0_🏠_Home.py")
+if page == "Statistics":
+    st.switch_page("pages/1_📊_Statistics.py")
+if page == "Calculation":
+    st.switch_page("pages/2_🔢_Calculation.py")
+if page == "Regression":
+    st.switch_page("pages/4_📈_Regression.py")
+if page == "About":
+    st.switch_page("pages/5_🔣_About.py")
 
 st.title(":no_mouth: Sentiment Analysis")
 
