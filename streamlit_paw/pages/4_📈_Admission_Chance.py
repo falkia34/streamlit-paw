@@ -32,7 +32,7 @@ styles = {
 }
 
 page = st_navbar(["Home", "Statistics", "Calculation", "Sentiment Analysis",
-                 "Regression", "About"], selected="Regression", styles=styles)
+                 "Regression", "Image Classification", "About"], selected="Regression", styles=styles)
 
 if page == "Home":
     st.switch_page("0_🏠_Home.py")
@@ -42,10 +42,13 @@ if page == "Calculation":
     st.switch_page("pages/2_🔢_Calculation.py")
 if page == "Sentiment Analysis":
     st.switch_page("pages/3_😶_Sentiment_Analysis.py")
+if page == "Image Classification":
+    st.switch_page("pages/5_👻_Bisindo_Gesture.py")
 if page == "About":
-    st.switch_page("pages/5_🔣_About.py")
+    st.switch_page("pages/6_🔣_About.py")
 
 
+@st.cache_resource
 def load_model(model_file):
     loaded_model = joblib.load(
         open(os.path.join('streamlit_paw/models', model_file), "rb"))
@@ -61,6 +64,8 @@ choice = st.sidebar.selectbox("Menu", menu, index=1)
 if choice == "Salary Prediction":
     st.switch_page("pages/4_📈_Linear_Regression.py")
 
+regressor = load_model("linear_regression_grad_admission.pkl")
+
 with st.form("my_form"):
     gre = st.slider("GRE Score", 260, 340, 290)
     toefl = st.slider("TOEFL Score", 0, 120, 85)
@@ -73,8 +78,6 @@ with st.form("my_form"):
     submitted = st.form_submit_button("Process")
 
 if submitted:
-    regressor = load_model("linear_regression_grad_admission.pkl")
-
     predicted_result = regressor.predict(
         [[gre, toefl, univ_rating, sop, lor, cgpa, research_exp]])
 

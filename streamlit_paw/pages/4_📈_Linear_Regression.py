@@ -33,7 +33,7 @@ styles = {
 }
 
 page = st_navbar(["Home", "Statistics", "Calculation", "Sentiment Analysis",
-                 "Regression", "About"], selected="Regression", styles=styles)
+                 "Regression", "Image Classification", "About"], selected="Regression", styles=styles)
 
 if page == "Home":
     st.switch_page("0_🏠_Home.py")
@@ -43,10 +43,13 @@ if page == "Calculation":
     st.switch_page("pages/2_🔢_Calculation.py")
 if page == "Sentiment Analysis":
     st.switch_page("pages/3_😶_Sentiment_Analysis.py")
+if page == "Image Classification":
+    st.switch_page("pages/5_👻_Bisindo_Gesture.py")
 if page == "About":
-    st.switch_page("pages/5_🔣_About.py")
+    st.switch_page("pages/6_🔣_About.py")
 
 
+@st.cache_resource
 def load_model(model_file):
     loaded_model = joblib.load(
         open(os.path.join('streamlit_paw/models', model_file), "rb"))
@@ -62,13 +65,14 @@ choice = st.sidebar.selectbox("Menu", menu)
 if choice == "Admission Chance":
     st.switch_page("pages/4_📈_Admission_Chance.py")
 
+regressor = load_model("linear_regression_salary.pkl")
+
 with st.form("my_form"):
     experience = st.slider("Berapa tahun pengalaman kerjanya?", 0, 20)
 
     submitted = st.form_submit_button("Proses")
 
 if submitted:
-    regressor = load_model("linear_regression_salary.pkl")
     experience_reshaped = np.array(experience).reshape(-1, 1)
 
     predicted_salary = regressor.predict(experience_reshaped)

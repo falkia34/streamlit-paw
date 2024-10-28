@@ -32,7 +32,7 @@ options = {
 }
 
 page = st_navbar(["Home", "Statistics", "Calculation", "Sentiment Analysis",
-                 "Regression", "About"], styles=styles, options=options)
+                 "Regression", "Image Classification", "About"], styles=styles, options=options)
 
 if page == "Statistics":
     st.switch_page("pages/1_📊_Statistics.py")
@@ -42,8 +42,10 @@ if page == "Sentiment Analysis":
     st.switch_page("pages/3_😶_Sentiment_Analysis.py")
 if page == "Regression":
     st.switch_page("pages/4_📈_Linear_Regression.py")
+if page == "Image Classification":
+    st.switch_page("pages/5_👻_Bisindo_Gesture.py")
 if page == "About":
-    st.switch_page("pages/5_🔣_About.py")
+    st.switch_page("pages/6_🔣_About.py")
 
 st.title(":house: Home")
 
